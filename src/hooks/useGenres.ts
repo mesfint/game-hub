@@ -1,41 +1,47 @@
-import { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
-import { CanceledError } from "axios";
+import { useData } from "./useData";
 
-interface Genre {
+export interface Genre {
   id: number;
   name: string;
 }
-interface FetchGamesResponse {
-  count: number;
-  results: Genre[];
-}
+
+/*Since we have a generic data fetching hook we don't need to re implement
+the logic here in useGenres, therefore we we implement useData as a generic 
+data fetching hook, In this case the useGenres does not know about the fetching data 
+from endpoint, It does'nt have any knowledge about the endpoint fetching
+*/
+
+// interface FetchGamesResponse {
+//   count: number;
+//   results: Genre[];
+// }
 
 export const useGenres = () => {
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [error, setError] = useState("");
-  //To implement the skeleton loading, first we need to track the loading of images
-  const [isLoading, setLoading] = useState(false);
+  return useData<Genre>("/genres");
+  //   const [genres, setGenres] = useState<Genre[]>([]);
+  //   const [error, setError] = useState("");
+  //   //To implement the skeleton loading, first we need to track the loading of images
+  //   const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const controller = new AbortController();
+  //   useEffect(() => {
+  //     const controller = new AbortController();
 
-    setLoading(true);
+  //     setLoading(true);
 
-    apiClient
-      .get<FetchGamesResponse>("/genres", { signal: controller.signal })
-      .then((res) => {
-        setGenres(res.data.results);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        setError(err.message);
-        setLoading(false);
-      });
+  //     apiClient
+  //       .get<FetchGamesResponse>("/genres", { signal: controller.signal })
+  //       .then((res) => {
+  //         setGenres(res.data.results);
+  //         setLoading(false);
+  //       })
+  //       .catch((err) => {
+  //         if (err instanceof CanceledError) return;
+  //         setError(err.message);
+  //         setLoading(false);
+  //       });
 
-    return () => controller.abort();
-  }, []);
+  //     return () => controller.abort();
+  //   }, []);
 
-  return { genres, error, isLoading };
+  //   return { genres, error, isLoading };
 };
