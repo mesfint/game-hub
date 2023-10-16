@@ -1,12 +1,18 @@
-import { HStack, Image, List, ListItem, Text } from "@chakra-ui/react";
+import { HStack, Image, List, ListItem, Spinner, Text } from "@chakra-ui/react";
 import { useGenres } from "../hooks/useGenres";
 import getCroppedImageUrl from "../services/image-url";
 
 function GenreList() {
-  const { data } = useGenres();
+  const { data, isLoading, error } = useGenres();
   //In this case GenreList know about the endpoint, but we don't want that
   //Therefore we use useData Inside useGenres to hide that
   //const { data } = useData<Genre>("/genres");
+
+  if (isLoading) return <Spinner />; //This is  all we have to do for Spinner
+  //BUt we have skeleton loading so no need spinner
+
+  //error
+  if (error) return null;
 
   return (
     <List>
