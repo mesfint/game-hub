@@ -3,6 +3,7 @@ import { useData } from "./useData";
 export interface Genre {
   id: number;
   name: string;
+  image_background: string;
 }
 
 /*Since we have a generic data fetching hook we don't need to re implement

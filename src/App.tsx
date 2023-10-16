@@ -8,15 +8,20 @@ function App() {
     <>
       <Grid
         templateAreas={{
-          base: `"nav "" main"`,
-          lg: `"nav nav""aside main"`, //1024
+          base: `"nav "" main"`, //single column
+          lg: `"nav nav""aside main"`, //1024 Two columns in lg devices
+        }}
+        templateColumns={{
+          base: "1fr", // the column takes up all available spaces
+          lg: "200px 1fr", //On lg devices we have 2 columns, the first one take 200px
+          //The second column w/c we have the grid will take the rest spaces
         }}
       >
         <GridItem area="nav">
           <NavBar />
         </GridItem>
         <Show above="lg">
-          <GridItem bg="yellow.500" area="aside">
+          <GridItem area="aside" paddingX={5}>
             <GenreList />
           </GridItem>
         </Show>
