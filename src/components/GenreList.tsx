@@ -12,9 +12,10 @@ import getCroppedImageUrl from "../services/image-url";
 
 interface Props {
   onSelectGenre: (genre: Genre) => void;
+  selectedGenre?: Genre | null;
 }
 
-function GenreList({ onSelectGenre }: Props) {
+function GenreList({ selectedGenre, onSelectGenre }: Props) {
   const { data, isLoading, error } = useGenres();
   //In this case GenreList know about the endpoint, but we don't want that
   //Therefore we use useData Inside useGenres to hide that
@@ -40,6 +41,7 @@ function GenreList({ onSelectGenre }: Props) {
               onClick={() => onSelectGenre(genre)}
               variant={"link"}
               fontSize="lg"
+              fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"} //make the selected Genre highlighted, also update the component in App.tsx
             >
               {genre.name}
             </Button>
