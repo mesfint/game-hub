@@ -1,4 +1,5 @@
 import { useData } from "./useData";
+import { Genre } from "./useGenres";
 
 export interface Platform {
   id: number;
@@ -19,8 +20,13 @@ export interface Game {
 //   results: Game[];
 // }
 
-function useGames() {
-  return useData<Game>("/games");
+function useGames(selectedGenre: Genre | null) {
+  //The query request is based on the api doc https://api.rawg.io/docs/#operation/games_list, check search for genre
+  //The third parameter  [selectedGenre?.id] is a dependency array, to much with the one defined in useData hook
+  return useData<Game>("/games", { params: { genres: selectedGenre?.id } }, [
+    selectedGenre?.id,
+  ]);
+
   // const [games, setGames] = useState<Game[]>([]);
   // const [error, setError] = useState("");
   // //To implement the skeleton loading, first we need to track the loading of images
