@@ -1,4 +1,5 @@
 const getCroppedImageUrl = (url: string) => {
+  if (!url) return "";
   //Example to crop an image 600 by 400
   //https://media.rawg.io/media/crop/600/400/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg
   //This API supports cropping Images on the fly like above, give attn for /crop/600/400/, which is
