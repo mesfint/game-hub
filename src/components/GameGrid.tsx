@@ -4,14 +4,18 @@ import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import GameCardContainer from "./GameCardContainer";
 import { Genre } from "../hooks/useGenres";
+import { GameQuery } from "../App";
 
+//To clean the code a little better we use a technique called Query Object Pattern
 interface Props {
-  selectedGenre: Genre | null;
-  selectedPlatform: Platform | null;
+  gameQuery: GameQuery;
+  // selectedGenre: Genre | null;
+  // selectedPlatform: Platform | null;
 }
 
-function GameGrid({ selectedGenre, selectedPlatform }: Props) {
-  const { data, error, isLoading } = useGames(selectedGenre, selectedPlatform);
+function GameGrid({ gameQuery }: Props) {
+  //refactored by adding interface on top and also usestate
+  const { data, error, isLoading } = useGames(gameQuery);
   const skeletons = [1, 2, 3, 4, 5, 6];
 
   return (

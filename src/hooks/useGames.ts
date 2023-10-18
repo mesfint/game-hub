@@ -1,3 +1,4 @@
+import { GameQuery } from "../App";
 import { useData } from "./useData";
 import { Genre } from "./useGenres";
 
@@ -20,9 +21,12 @@ export interface Game {
 //   results: Game[];
 // }
 
+//To clean the code a little better we use a technique called Query Object Pattern
+
 function useGames(
-  selectedGenre: Genre | null,
-  selectedPlatform: Platform | null
+  gameQuery: GameQuery
+  // selectedGenre: Genre | null,
+  // selectedPlatform: Platform | null
 ) {
   //The query request is based on the api doc https://api.rawg.io/docs/#operation/games_list, check search for genre
   //The third parameter  [selectedGenre?.id] is a dependency array, to much with the one defined in useData hook
@@ -30,11 +34,12 @@ function useGames(
     "/games",
     {
       params: {
-        genres: selectedGenre?.id,
-        platforms: selectedPlatform?.id,
+        genres: gameQuery.genre?.id,
+        platforms: gameQuery.platform?.id,
       },
     },
-    [selectedGenre?.id, selectedPlatform?.id]
+    [gameQuery] //we don't need to pass individual object
+    // [selectedGenre?.id, selectedPlatform?.id]
   );
 
   // const [games, setGames] = useState<Game[]>([]);
