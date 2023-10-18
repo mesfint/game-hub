@@ -1,10 +1,16 @@
-import { useData } from "./useData";
+//import { useData } from "./useData";
+import genres from "../data/genre";
 
 export interface Genre {
   id: number;
   name: string;
   image_background: string;
 }
+
+// Finally we made a change about the Genres, Genres are hardly changing
+// Seems we have the same Genre for almost all the time, therefore
+//Instead of getting the data from server its better to get it locally as a static data
+//copy all genre results from network tab and save it as a static data > genre.ts
 
 /*Since we have a generic data fetching hook we don't need to re implement
 the logic here in useGenres, therefore we we implement useData as a generic 
@@ -17,32 +23,38 @@ from endpoint, It does'nt have any knowledge about the endpoint fetching
 //   results: Genre[];
 // }
 
-export const useGenres = () => {
-  return useData<Genre>("/genres");
-  //   const [genres, setGenres] = useState<Genre[]>([]);
-  //   const [error, setError] = useState("");
-  //   //To implement the skeleton loading, first we need to track the loading of images
-  //   const [isLoading, setLoading] = useState(false);
+//The reason why we pass three parameters, b/c not to affect other hooks which are
+//associated with useGenres hook, that already receiving these parameters
 
-  //   useEffect(() => {
-  //     const controller = new AbortController();
+export const useGenres = () => ({
+  data: genres,
+  isLoading: false,
+  error: false,
+});
+//export const useGenres = () => useData<Genre>("/genres");
+//   const [genres, setGenres] = useState<Genre[]>([]);
+//   const [error, setError] = useState("");
+//   //To implement the skeleton loading, first we need to track the loading of images
+//   const [isLoading, setLoading] = useState(false);
 
-  //     setLoading(true);
+//   useEffect(() => {
+//     const controller = new AbortController();
 
-  //     apiClient
-  //       .get<FetchGamesResponse>("/genres", { signal: controller.signal })
-  //       .then((res) => {
-  //         setGenres(res.data.results);
-  //         setLoading(false);
-  //       })
-  //       .catch((err) => {
-  //         if (err instanceof CanceledError) return;
-  //         setError(err.message);
-  //         setLoading(false);
-  //       });
+//     setLoading(true);
 
-  //     return () => controller.abort();
-  //   }, []);
+//     apiClient
+//       .get<FetchGamesResponse>("/genres", { signal: controller.signal })
+//       .then((res) => {
+//         setGenres(res.data.results);
+//         setLoading(false);
+//       })
+//       .catch((err) => {
+//         if (err instanceof CanceledError) return;
+//         setError(err.message);
+//         setLoading(false);
+//       });
 
-  //   return { genres, error, isLoading };
-};
+//     return () => controller.abort();
+//   }, []);
+
+//   return { genres, error, isLoading };
