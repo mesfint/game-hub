@@ -37,6 +37,7 @@ function useGames(
         genres: gameQuery.genre?.id,
         platforms: gameQuery.platform?.id,
         ordering: gameQuery.sortOrder, //ordering=> Is the query name given by API
+        search: gameQuery.searchText,
       },
     },
     [gameQuery] //we don't need to pass individual object
